@@ -1,14 +1,15 @@
 
 //create a container
-divContainer = document.createElement("div");
+gridContainer = document.createElement("div");
 //add container to body
-document.body.appendChild(divContainer);
+document.body.appendChild(gridContainer);
 //turn container into flexbox
-divContainer.style.display = "flex";
-divContainer.style.flexWrap = "wrap";  // Added: allows wrapping to create rows
-divContainer.style.width = "352px";    // Added: width to fit exactly 16 squares per row
+gridContainer.style.display = "flex";
+gridContainer.style.flexWrap = "wrap";  // Added: allows wrapping to create rows
+gridContainer.style.width = "352px";    // Added: width to fit exactly 16 squares per row
+gridContainer.style.alignItems = "center"; 
 //change container color 
-divContainer.style.backgroundColor = "aqua";
+gridContainer.style.backgroundColor = "aqua";
 //Create 256 grid items (16x16)
 
 for (let i = 0; i < 256; i++) {
@@ -25,8 +26,8 @@ for (let i = 0; i < 256; i++) {
     gridItem.style.flex = '1 1 auto ';
 
     // Add data attribute
-    gridItem.setAttribute('data-index', i);
-    divContainer.appendChild(gridItem);
+    gridItem.setAttribute('data-index', i);//data- is custom attributes
+    gridContainer.appendChild(gridItem);
 
     //adding hover effect 
     gridItem.addEventListener('mouseenter', function () {
@@ -36,11 +37,19 @@ for (let i = 0; i < 256; i++) {
     gridItem.addEventListener('mouseleave', function () {
         this.style.backgroundColor = '#fff';
     });
-
-    
-    
 }
 
+const btn = document.createElement("button"); 
+btn.textContent = ("choose grid size")
 
-
-
+//create a main container
+mainContainer = document.createElement("div");
+mainContainer.style.display = "flex";
+document.body.appendChild(mainContainer);
+mainContainer.appendChild(gridContainer);
+//add the gridContainer into mainContainer
+mainContainer.insertBefore(btn, gridContainer);
+//make flexbox go from top to bottom 
+mainContainer.style.flexDirection ="column";
+//set the width of button to grid length 
+btn.style.width = gridContainer.style.width
