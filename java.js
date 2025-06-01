@@ -27,7 +27,20 @@ for (let i = 0; i < 256; i++) {
     // Add data attribute
     gridItem.setAttribute('data-index', i);
     divContainer.appendChild(gridItem);
+
+    //adding hover effect 
+    gridItem.addEventListener('mouseenter', function () {
+        this.style.backgroundColor = 'green';
+    });
+
+    gridItem.addEventListener('mouseleave', function () {
+        this.style.backgroundColor = '#fff';
+    });
+
+    
+    
 }
+
 
 
 
