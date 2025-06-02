@@ -45,7 +45,7 @@ function createGrid() {
     gridContainer.style.width = (totalSquareSize * size) + "px";
     btn.style.width = gridContainer.style.width;
 
-     // ✅ Create size × size squares (not just size squares)
+    // ✅ Create size × size squares (not just size squares)
     for (let i = 0; i < size * size; i++) {
         const gridItem = document.createElement("div");
 
@@ -62,7 +62,7 @@ function createGrid() {
 
         //adding hover effect 
         gridItem.addEventListener('mouseenter', function () {
-            this.style.backgroundColor = 'green';
+            this.style.backgroundColor = rgbToString(getRandomRGB());
         });
 
         gridItem.addEventListener('mouseleave', function () {
@@ -70,4 +70,16 @@ function createGrid() {
         });
 
     }
+}
+// Function to generate random RGB values
+function getRandomRGB() {
+    const r = Math.floor(Math.random() * 256);
+    const g = Math.floor(Math.random() * 256);
+    const b = Math.floor(Math.random() * 256);
+    return { r, g, b };
+}
+
+// Function to convert RGB object to CSS rgb string
+function rgbToString(rgb) {
+    return `rgb(${rgb.r}, ${rgb.g}, ${rgb.b})`;
 }
