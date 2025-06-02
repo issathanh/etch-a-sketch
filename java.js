@@ -1,55 +1,73 @@
 
 //create a container
-gridContainer = document.createElement("div");
+let gridContainer = document.createElement("div");
 //add container to body
 document.body.appendChild(gridContainer);
-//turn container into flexbox
-gridContainer.style.display = "flex";
-gridContainer.style.flexWrap = "wrap";  // Added: allows wrapping to create rows
-gridContainer.style.width = "352px";    // Added: width to fit exactly 16 squares per row
-gridContainer.style.alignItems = "center"; 
-//change container color 
-gridContainer.style.backgroundColor = "aqua";
-//Create 256 grid items (16x16)
 
-for (let i = 0; i < 256; i++) {
-    const gridItem = document.createElement("div");
-
-    // Style each grid item
-    gridItem.style.width = '20px';
-    gridItem.style.height = '20px';
-    gridItem.style.backgroundColor = '#fff';
-    gridItem.style.borderRadius = '2px';
-    gridItem.style.transition = 'all 0.2s ease';
-    gridItem.style.cursor = 'pointer';
-    gridItem.style.margin = '1px';
-    gridItem.style.flex = '1 1 auto ';
-
-    // Add data attribute
-    gridItem.setAttribute('data-index', i);//data- is custom attributes
-    gridContainer.appendChild(gridItem);
-
-    //adding hover effect 
-    gridItem.addEventListener('mouseenter', function () {
-        this.style.backgroundColor = 'green';
-    });
-
-    gridItem.addEventListener('mouseleave', function () {
-        this.style.backgroundColor = '#fff';
-    });
-}
-
-const btn = document.createElement("button"); 
+const btn = document.createElement("button");
 btn.textContent = ("choose grid size")
 
 //create a main container
-mainContainer = document.createElement("div");
+let mainContainer = document.createElement("div");
 mainContainer.style.display = "flex";
 document.body.appendChild(mainContainer);
 mainContainer.appendChild(gridContainer);
 //add the gridContainer into mainContainer
 mainContainer.insertBefore(btn, gridContainer);
 //make flexbox go from top to bottom 
-mainContainer.style.flexDirection ="column";
+mainContainer.style.flexDirection = "column";
 //set the width of button to grid length 
-btn.style.width = gridContainer.style.width
+//createGrid
+
+//turn container into flexbox
+gridContainer.style.display = "flex";
+gridContainer.style.flexWrap = "wrap";  // Added: allows wrapping to create rows
+gridContainer.style.alignItems = "center";
+//change container color 
+gridContainer.style.backgroundColor = "aqua";
+btn.onclick = createGrid;
+//Create grid using size
+function createGrid() {
+    const size = prompt('Enter the number of squares per side for the new grid (max 100):');
+
+    if (!size || size < 1 || size > 100) {
+        alert("Please enter a valid number between 1 and 100");
+        return;
+    }
+
+    // Clear existing grid
+    gridContainer.innerHTML = '';
+
+    // Calculate container width (22px per square: 20px + 2px margin)
+    const squareSize = 20;
+    const margin = 2;
+    const totalSquareSize = squareSize + margin;
+    gridContainer.style.width = (totalSquareSize * size) + "px";
+    btn.style.width = gridContainer.style.width;
+
+     // ✅ Create size × size squares (not just size squares)
+    for (let i = 0; i < size * size; i++) {
+        const gridItem = document.createElement("div");
+
+        gridItem.style.width = squareSize + 'px';
+        gridItem.style.height = squareSize + 'px';
+        gridItem.style.backgroundColor = '#fff';
+        gridItem.style.borderRadius = '2px';
+        gridItem.style.transition = 'all 0.2s ease';
+        gridItem.style.cursor = 'pointer';
+        gridItem.style.margin = '1px';
+
+        gridItem.setAttribute('data-index', i);
+        gridContainer.appendChild(gridItem);
+
+        //adding hover effect 
+        gridItem.addEventListener('mouseenter', function () {
+            this.style.backgroundColor = 'green';
+        });
+
+        gridItem.addEventListener('mouseleave', function () {
+            this.style.backgroundColor = '#fff';
+        });
+
+    }
+}
